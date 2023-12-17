@@ -1,0 +1,26 @@
+{
+    "gym_ID": 1,
+    "model_ID": 5,
+    "RL_model": "TD3",
+    "training_time": 1000,
+    "net_size": 32,
+    "epoch_time":100,
+    "arguments":{
+        "learning_starts": 100,
+        "learning_rate": 1e-3,
+        "gamma": 0.99,
+        "gradient_steps": 1,
+        "train_freq": 1,
+        "buffer_size": 1e6,
+        "policy_delay": 2,
+        "batch_size": 256,
+        "verbose":1
+    },
+    "FAST_params":{
+        "max_time": 100,
+        "pg_nom": 15000,
+        "wg_nom": 7.56,
+        "Tem_ini": 19786767.5,
+        "Pitch_ini": 15.55
+    }
+}

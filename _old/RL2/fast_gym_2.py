@@ -6,11 +6,11 @@ import json
 
 input_file_name = "C:\\dev_local_repo\\WTRL\\fast_gym\\fast_gym\\dependencies\\FAST_1\\IEA-15-240-RWT-Monopile.fst"
 library_rel_path = "..\\dependencies\\openfastlib.dll"
-class FastGym_1(FastGymBase):
+class FastGym_2(FastGymBase):
     """ FastGym_1 environment
     - Actions: Pitch increment
     - Observations: GenSpeed error, Pitch, Wind Speed x
-    - Reward: -(GenSpeed error)^2
+    - Reward: -atan(GenSpeed error)/(pi/2)
     """
     def __init__(self, inputFileName=input_file_name, libraryPath=library_rel_path, max_time=40, Tem_ini=1.978655e7, Pitch_ini=15.55, wg_nom=7.55, pg_nom=1.5e7,enable_myLog=1,myLogName=""):
         super().__init__(inputFileName, libraryPath, max_time, Tem_ini, Pitch_ini, wg_nom, pg_nom)
@@ -21,6 +21,7 @@ class FastGym_1(FastGymBase):
         low_obs = np.array([-10,0,0], dtype=np.float32)
         high_obs = np.array([10,90,40], dtype=np.float32)
         super().set_spaces(low_action, high_action, low_obs, high_obs)
+        self.error_pre=0
 
         #LOGS
         self.enable_myLog = enable_myLog
@@ -55,7 +56,10 @@ class FastGym_1(FastGymBase):
         return gym_obs
    
     def reward(self,obs):
-        reward = -(obs[0])**2 
+        error = obs[0]
+        der_error = (error - self.error_pre)/self.dt.value
+        reward = -np.arctan(der_error)/(np.pi/2)
+        self.error_pre=error
         self.log_callback(reward)
         self.udp_callback(reward)
         return reward

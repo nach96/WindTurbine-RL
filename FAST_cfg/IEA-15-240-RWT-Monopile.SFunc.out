@@ -1,5 +1,5 @@
 
-Predictions were generated on 18-Oct-2023 at 17:01:23 using OpenFAST, compiled as a DLL S-Function for Simulink as a 64-bit application using double precision at commit v3.3.0-1-g4e85fa62-dirty
+Predictions were generated on 17-Dec-2023 at 12:37:28 using OpenFAST, compiled as a DLL S-Function for Simulink as a 64-bit application using double precision at commit v3.3.0-1-g4e85fa62-dirty
  linked with  NWTC Subroutine Library; ElastoDyn; InflowWind; AeroDyn; ServoDyn
 
 Description from the FAST input file: IEA 15 MW offshore reference model monopile configuration
