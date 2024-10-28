@@ -2,9 +2,8 @@
     "gym_ID": 1,
     "model_ID": 5,
     "RL_model": "TD3",
-    "training_time": 1000,
+    "training_time": 10000,
     "net_size": 32,
-    "epoch_time":100,
     "arguments":{
         "learning_starts": 100,
         "learning_rate": 1e-3,

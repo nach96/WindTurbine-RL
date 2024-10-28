@@ -6,10 +6,7 @@ from stable_baselines3 import TD3, SAC, PPO
 from stable_baselines3.common.logger import configure
 import sys
 import importlib
-
-#Do this in a function
-#from fast_gym_1 import FastGym_1
-
+import logging
 
 os.environ['FOR_DISABLE_CONSOLE_CTRL_HANDLER'] = '1'
 
@@ -24,13 +21,12 @@ class ModelParser():
         self.learn()
 
     def setup_env(self,input_file_rel_path):
-        #import fast_gym_1 from string "fast_gym_1"
-        
+        #import gym from gymID        
         gym_file_name = "fast_gym_"+self.gym_ID
         gym_class_name = "FastGym_"+self.gym_ID
-
         gym_class = self.import_from(gym_file_name, gym_class_name)
-
+        print("Gym imported:", gym_file_name, gym_class_name)
+        #setup environment
         self.env = gym_class(inputFileName=self.h.get_file_path(input_file_rel_path), **self.FAST_params, enable_myLog=True, myLogName="td3_1")
 
     def import_from(self, file_name, class_name):
@@ -61,7 +57,6 @@ class ModelParser():
 
     def parse_json(self,json_rel_path):
         # Read the JSON file
-        # input_file_rel_path = "model_hyperparams/params_model_1_5.json"
         json_file_Path = os.path.join(os.path.dirname(__file__), json_rel_path)
 
         with open(json_file_Path) as f:
@@ -69,8 +64,6 @@ class ModelParser():
 
         self.model_params = data['arguments']
         self.float_to_int(self.model_params)
-        
-        # Extract the arguments from the JSON data
         self.gym_ID = str(data['gym_ID'])
         self.model_ID = str(data['model_ID'])
         self.RL_model = data['RL_model']
@@ -81,18 +74,24 @@ class ModelParser():
         self.total_timesteps = int(self.training_time/0.01)
 
     def setup_logger(self):
-        log_Path = self.h.get_file_path("../Logs/log_trains/model_1_"+self.model_ID)
+        log_id = self.gym_ID+"_"+self.model_ID
+        log_Path = self.h.get_file_path("../Logs/log_trains/model_"+log_id)
         new_logger = configure(log_Path, ["stdout", "csv", "tensorboard"])
         self.model.set_logger(new_logger)
 
     def learn(self):
+        log_id = self.gym_ID+"_"+self.model_ID
         try:
-            print("LEARNING")
-            self.model.learn(total_timesteps=self.total_timesteps,log_interval=1,tb_log_name=("1_"+self.model_ID+"_log"))
-            self.h.log_and_exit(self.model, self.env, self.model_ID)
+            logging.info("LEARNING")
+            self.model.learn(total_timesteps=self.total_timesteps,log_interval=1,tb_log_name=(log_id+"_log"))
+            self.h.log_and_exit(self.model, self.env, log_id)
         except KeyboardInterrupt:
-            print("EXIT")
-            self.h.log_and_exit(self.model, self.env, self.model_ID)
+            logging.warning("EXIT with KeyboardInterrupt")
+            self.h.log_and_exit(self.model, self.env, log_id)
+            sys.exit(1)
+        except Exception as e:
+            logging.warning("EXIT with Exception")
+            self.h.log_and_exit(self.model, self.env, log_id)
             sys.exit(1)
         
 class HelperOFRL():
@@ -108,12 +107,12 @@ class HelperOFRL():
         return file_path
                                        
     def log_and_exit(self, model, env, id):
-        model_Path = self.get_file_path("../Logs/log_models/model_1_"+id)
+        model_Path = self.get_file_path("../Logs/log_models/model_"+id)
         model.save(self.name_date(model_Path,""))
         beepy.beep(sound=5)
 
         # Plot Logged variables during training
-        log_Path = self.get_file_path("../Logs/log_trains/model_1_"+id)
+        log_Path = self.get_file_path("../Logs/log_trains/model_"+id)
         log_df = pd.DataFrame(env.myLog)
         log_df.to_csv(self.name_date(log_Path), sep=',', encoding='utf-8')
 

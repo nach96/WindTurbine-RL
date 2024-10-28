@@ -1,0 +1,24 @@
+{
+    "gym_ID": 1,
+    "model_ID": 4,
+    "RL_model": "SAC",
+    "training_time": 100000,
+    "net_size": 32,
+    "arguments":{
+        "learning_starts": 1000,
+        "learning_rate": 1e-3,
+        "gamma": 0.98,
+        "gradient_steps": 1,
+        "train_freq": 100,
+        "buffer_size": 1e5,
+        "batch_size": 256,
+        "verbose":1
+    },
+    "FAST_params":{
+        "max_time": 100,
+        "pg_nom": 15000,
+        "wg_nom": 7.56,
+        "Tem_ini": 19786767.5,
+        "Pitch_ini": 15.55
+    }
+}
