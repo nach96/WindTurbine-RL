@@ -5,8 +5,8 @@ logging.basicConfig(level=logging.INFO)
 
 # SimpleWT_gym
 #Configuration Files
-json_rel_path = "../RL_cfg/params_model_2_7_simpleWT_DDPG.json"
-model_rel_path = "../Logs/log_models/model_2_7_11_07_2024_22_39_38"
+json_rel_path = "../RL_cfg/params_model_3_9_simpleWT_DDPG.json"
+model_rel_path = "../Logs/log_models/model_3_9_11_25_2024_19_00_41"
 input_file_rel_path = ""
 
 mp = ModelParser(json_rel_path,input_file_rel_path)
