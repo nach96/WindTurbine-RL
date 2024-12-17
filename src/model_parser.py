@@ -170,7 +170,8 @@ class HelperOFRL():
     def name_date(self,name,extension=".csv"):
         from datetime import datetime
         now = datetime.now()
-        date_time = now.strftime("%m_%d_%Y_%H_%M_%S")
+       #date_time = now.strftime("%m_%d_%Y_%H_%M_%S")
+        date_time = now.strftime("%m_%d_%Y_%H_%M")
         file_name = name + "_" + date_time + extension
         return file_name
     
