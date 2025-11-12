@@ -6,8 +6,8 @@ logging.basicConfig(level=logging.INFO)
 
 # SimpleWT_gym
 #Configuration Files
-json_rel_path = "../RL_cfg/params_model_8_9_simpleWT_DDPG_retrain.json"
-model_rel_path = "../Logs/log_models/model_8_9_02_01_2025_12_03"
+json_rel_path = "../RL_cfg/params_model_2_9_simpleWT_DDPG.json"
+model_rel_path = "../Logs/log_models/Controlador_1"
 input_file_rel_path = ""
 
 def wind_stair(ts):
@@ -45,5 +45,5 @@ while (terminated==False):
         terminated=True
         break
 
-log_id = "Sim"+mp.gym_ID+"_"+mp.model_ID
+log_id = "Sim_wind_"+mp.gym_ID+"_"+mp.model_ID
 mp.h.log_and_exit(mp.model, mp.env, log_id)

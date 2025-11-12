@@ -80,23 +80,6 @@ class ModelParser():
         with open(json_file_Path) as f:
             data = json.load(f)
 
-        """
-        self.model_params = data['arguments']
-        self.float_to_int(self.model_params)
-        self.gym_ID = str(data['gym_ID'])
-        self.model_ID = str(data['model_ID'])
-        self.gym_package_name = data['gym_package_name']
-        self.gym_file_name = data['gym_file_name']
-        self.gym_class_name = data['gym_class_name']
-        self.RL_model = data['RL_model']
-        self.net_size = data["net_size"]
-        self.net_kwargs = dict(net_arch=[self.net_size, self.net_size])
-        self.FAST_params = data['FAST_params']
-        self.training_time = data['training_time']
-        self.total_timesteps = int(self.training_time/0.01)
-        self.noise_std = data['noise_std']
-        """
-
         self.set_gym_params(data)
         self.set_model_params(data)      
     
